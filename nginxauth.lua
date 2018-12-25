@@ -79,7 +79,7 @@ local function access ()
     if string.find(clientip,":") then  -- IPv6 client
 	if #white_ipv6_list >= 1 then
             for i=1, #white_ipv6_list do
-                if string.find(clientip, white_ipv6_list[i]) ~= nil then
+                if string.find(clientip, white_ipv6_list[i]) == 1 then
                     return
 		end
             end
