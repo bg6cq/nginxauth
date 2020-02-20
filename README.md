@@ -17,6 +17,23 @@
 4. 认证后重定向到之前访问的URL（next参数），这时因为cookie中有个三个参数的信息，经过检查后会返回源站内容。
 ```
 
+5. 如果在日志中需要增加登录用户信息，可以
+
+nginx.conf中
+```
+log_format main_auth '... - $nginx_auth_uid - $upstream_addr $upstream_status $upstream_response_time - ';
+
+server {
+      listen 80;
+      server_name ************ ;
+      access_log  logs/item_access.log main_auth;
+      set $nginx_auth_uid "-";
+      if ($nginx_auth_uid ~* "nginx_auth_uid=(.+?)(?=;|$)") {
+        set $nginx_auth_uid $1;
+      }
+```
+
+
 致谢：代码参考了 https://github.com/StephenPCG/nginx-lua-simpleauth-module
 
 
